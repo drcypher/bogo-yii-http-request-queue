@@ -164,7 +164,6 @@ class CBQueuedHttpRequestConsumer extends CComponent
 	 */
 	public function consumeBatch($consumeTimeoutSeconds)
 	{
-		echo $consumeTimeoutSeconds;
 		// Make sure our session is still live
 		if (!$this->hasLiveSession()) {
 			throw new CException('No valid session found');
