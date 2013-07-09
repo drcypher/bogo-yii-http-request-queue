@@ -120,8 +120,16 @@ trait TBActiveRecordQueuedHttpRequest
 
 		$requestParams = json_decode($this->paramsJson, true);
 
+		if (!empty($requestParams['headers'])) {
+			$requestMessage->setHeaders($requestParams['headers']);
+		}
+
 		if (!empty($requestParams['getParams'])) {
 			$requestMessage->setGetParams($requestParams['getParams']);
+		}
+
+		if (!empty($requestParams['postParams'])) {
+			$requestMessage->setGetParams($requestParams['postParams']);
 		}
 
 		if (!empty($requestParams['userFields'])) {
@@ -143,7 +151,9 @@ trait TBActiveRecordQueuedHttpRequest
 		$this->uri = $message->getUri();
 
 		$this->paramsJson = json_encode(array(
+			'headers'=>$message->getHeader(),
 			'getParams'=>$message->getGetParam(),
+			'postParams'=>$message->getPostParam(),
 			'userFields'=>$message->getUserField()
 		));
 	}
