@@ -150,11 +150,20 @@ trait TBActiveRecordQueuedHttpRequest
 
 		$this->uri = $message->getUri();
 
-		$this->paramsJson = json_encode(array(
+		$params = array(
 			'headers'=>$message->getHeader(),
 			'getParams'=>$message->getGetParam(),
 			'postParams'=>$message->getPostParam(),
 			'userFields'=>$message->getUserField()
-		));
+		);
+
+		// Don't serialize empty arrays
+		foreach ($params as $name=>&$value) {
+			if (empty($value)) {
+				unset($params[$name]);
+			}
+		}
+
+		$this->paramsJson = json_encode($params);
 	}
 }

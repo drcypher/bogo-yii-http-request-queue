@@ -40,6 +40,7 @@ trait TBActiveRecordQueuedHttpRequestRepository
 	public function dequeueSuccessful($sessionId, IBQueuedHttpRequest $queuedHttpRequest)
 	{
 		$queuedHttpRequest->logLastAttempt();
+		$queuedHttpRequest->logLastError(null, null);
 		$queuedHttpRequest->stateId = IBQueuedHttpRequest::STATE_SUCCESS;
 		$queuedHttpRequest->nextAttemptUdatetime = null;
 		$queuedHttpRequest->save();
